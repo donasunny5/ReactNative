@@ -7,7 +7,6 @@ describe("useCustomHook tests", () => {
        // render the hook
        const result = renderHook(useCustomHook, {initialProps:"hello world!"})
        // debug
-       console.log(result)
        // do something
    })
 })

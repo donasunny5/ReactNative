@@ -16,12 +16,14 @@ const addTask = (name) => {
 
 const clearAll = () => {
   todoList.length = 0;
-  idCounter = 0;
+  idCounter = 0; 
   return [...todoList];
 };
 
-const changeStatus = (id) => {
-  // implementation for changing status
+const changeStatus = (id,todoCompletionValue) => {
+  let findIndex = todoList.findIndex((list) => {return list.id == id});
+  todoList[findIndex] && (todoList[findIndex].isComplete = todoCompletionValue)
 };
-
+    
 export { todoList, addTask, clearAll, changeStatus };
+ 
