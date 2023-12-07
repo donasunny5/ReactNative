@@ -12,11 +12,9 @@ export default function App() {
       // Do not add empty tasks
       return;
     }
-
     const taskId = addTask(newTaskName);
     setListData([...todoList]); // Update the FlatList data
     setNewTaskName(''); // Clear the input field
-    console.log(taskId);
   };
   const handleClearAll = () => {
     const updatedList = clearAll();
@@ -26,15 +24,17 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1 }}>
-        <Text>Todo List</Text>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>Todo List</Text> 
+        </View>
         <FlatList
           style={styles.list}
           data={listData}
           renderItem={({ item }) => {
-            return <RowComponent task={item} onChangeStatus={() => changeStatus(item.id)} />;
+            return <RowComponent task={item} onChangeStatus={(todoCompletionValue) => changeStatus(item.id,todoCompletionValue)} />;
           }}
         />
-        <Text>{listData.length === 0 ? 'No tasks in the list' : ''}</Text>
+        <Text style={styles.emptyText}>{listData.length === 0 ? 'No tasks in the list' : ''}</Text>
 
         {/* Text input for task name */}
         <TextInput
@@ -43,12 +43,12 @@ export default function App() {
           value={newTaskName}
           onChangeText={(text) => setNewTaskName(text)}
         />
-
+ 
         {/* Button to add task */}
         <Button onPress={handleAddTask} title="Add Task" />
 
         {/* Button to clear all tasks */}
-        <Button onPress={() => handleClearAll()} title="Clear All" />
+        <Button color="black" onPress={() => handleClearAll()} title="Clear All" />
       </View>
     </SafeAreaView>
   );
@@ -62,8 +62,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
+  header:{
+    textAlign: 'center',
+    fontSize: 20,
+    fontWeight: '700'
+  },
+  headerContainer:{
+    backgroundColor: '#e2e2e2',
+    paddingVertical: 10
+  },
   list: {
     marginTop: 10,
+  },
+  emptyText:{
+    fontSize: 20,
+    fontWeight: "700"
   },
   input: {
     height: 40,
