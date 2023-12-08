@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, FlatList, Platform, StatusBar, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList, Platform, StatusBar, Button, TextInput, TouchableOpacity } from 'react-native';
 import RowComponent from './components/RowComponent';
 import { todoList, addTask, clearAll, changeStatus } from './TodoList';
 
@@ -20,35 +20,49 @@ export default function App() {
     const updatedList = clearAll();
     setListData(updatedList);
   };
-<Button onPress={handleClearAll} title="Clear All" />
+
+  <Button onPress={handleClearAll} title="Clear All" />
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1 }}>
         <View style={styles.headerContainer}>
-          <Text style={styles.header}>Todo List</Text> 
+          <Text style={styles.header}>Task Manager</Text>
         </View>
-        <FlatList
-          style={styles.list}
-          data={listData}
-          renderItem={({ item }) => {
-            return <RowComponent task={item} onChangeStatus={(todoCompletionValue) => changeStatus(item.id,todoCompletionValue)} />;
-          }}
-        />
-        <Text style={styles.emptyText}>{listData.length === 0 ? 'No tasks in the list' : ''}</Text>
 
-        {/* Text input for task name */}
-        <TextInput
-          style={styles.input}
-          placeholder="Enter task name"
-          value={newTaskName}
-          onChangeText={(text) => setNewTaskName(text)}
-        />
- 
-        {/* Button to add task */}
-        <Button onPress={handleAddTask} title="Add Task" />
+        {listData.length === 0 ? (
+          <View style={styles.centeredContainer}>
+            <Text style={styles.emptyText}>No tasks in the list</Text>
+          </View>
+        ) : (
+          <FlatList
+            style={styles.list}
+            data={listData}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <RowComponent
+                task={item}
+                onChangeStatus={(todoCompletionValue) => changeStatus(item.id, todoCompletionValue)}
+              />
+            )}
+          />
+        )}
 
-        {/* Button to clear all tasks */}
-        <Button color="black" onPress={() => handleClearAll()} title="Clear All" />
+        <View style={styles.footer}>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter task name"
+            value={newTaskName}
+            onChangeText={(text) => setNewTaskName(text)}
+          />
+          <TouchableOpacity style={styles.addButton} onPress={handleAddTask}>
+            <Text style={styles.buttonText}>Add Task</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.clearButton} onPress={handleClearAll}>
+            <Text style={styles.buttonText}>Clear All</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -62,19 +76,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
   },
-  header:{
+  header: {
     textAlign: 'center',
     fontSize: 20,
     fontWeight: '700'
   },
-  headerContainer:{
+  headerContainer: {
     backgroundColor: '#e2e2e2',
     paddingVertical: 10
   },
   list: {
     marginTop: 10,
+    marginBottom: 10
   },
-  emptyText:{
+  emptyText: {
     fontSize: 20,
     fontWeight: "700"
   },
@@ -84,5 +99,48 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: 10,
     paddingHorizontal: 8,
+  },
+  centeredContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  footer: {
+    backgroundColor: '#f2f2f2',
+    borderTopWidth: 1,
+    borderTopColor: '#e1e1e1',
+    padding: 10,
+    paddingBottom: Platform.OS === 'ios' ? 20 : 10,
+    alignItems: 'center',
+  },
+  input: {
+    height: 45,
+    borderColor: '#d3d3d3',
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    width: '90%',
+    backgroundColor: '#fff',
+  },
+  addButton: {
+    backgroundColor: '#007bff',
+    padding: 10,
+    borderRadius: 5,
+    width: '90%',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  clearButton: {
+    backgroundColor: '#b22222',
+    padding: 10,
+    borderRadius: 5,
+    width: '90%',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
