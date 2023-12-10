@@ -15,7 +15,7 @@ const RowComponent = ({ task, onChangeStatus }) => {
             {task.isComplete ? ' Finished' : ' Pending'}
           </Text>
         </View>
-        <Switch value={todoCompletionValue} onValueChange={toggle} />
+        <Switch value={todoCompletionValue} onValueChange={toggle}  testID={'toggle-switch'}/>
       </View>
     </View>
 
@@ -23,7 +23,6 @@ const RowComponent = ({ task, onChangeStatus }) => {
 };
 
 const styles = StyleSheet.create({
-  // Your existing styles
   todoTask: {
     backgroundColor: '#f9f9f9',
     padding: 10,
@@ -47,7 +46,7 @@ const styles = StyleSheet.create({
   taskNameText: {
     fontSize: 18,
     color: '#333',
-    fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
+    //fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
     fontWeight: 'bold',
   },
   statusContainer: {
@@ -56,13 +55,13 @@ const styles = StyleSheet.create({
   statusText: {
     fontSize: 16,
     color: '#555',
-    fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
+    //fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
     marginRight: 4,
   },
   statusValue: {
     fontSize: 16,
     color: '#555',
-    fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
+    //fontFamily: Platform.OS === 'ios' ? 'Helvetica' : 'sans-serif',
   },
   completedStatus: {
     color: 'green',

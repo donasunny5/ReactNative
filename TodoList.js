@@ -1,5 +1,3 @@
-// TodoList.js
-
 let todoList = [];
 let idCounter = 0;
 
@@ -22,7 +20,10 @@ const clearAll = () => {
 
 const changeStatus = (id,todoCompletionValue) => {
   let findIndex = todoList.findIndex((list) => {return list.id == id});
-  todoList[findIndex] && (todoList[findIndex].isComplete = todoCompletionValue)
+  //todoList[findIndex] && (todoList[findIndex].isComplete = todoCompletionValue)
+  if (findIndex !== -1) {
+    todoList[findIndex].isComplete = todoCompletionValue;
+  }
 };
     
 export { todoList, addTask, clearAll, changeStatus };

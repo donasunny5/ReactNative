@@ -1,12 +1,22 @@
-import { renderHook} from "@testing-library/react-native";
+import { act, renderHook} from "@testing-library/react-native";
+import useTaskStatus from "../useTaskStatus";
 
-import useCustomHook from "../useCustomHook";
-
-describe("useCustomHook tests", () => {
-   it("the state variable is initially set to a value", ()=> {
-       // render the hook
-       const result = renderHook(useCustomHook, {initialProps:"hello world!"})
-       // debug
-       // do something
-   })
+describe("useTaskStatus tests", () => {
+  it('The custom hook can set the initial value of the todoCompletionValue state variable', () => {
+    const initialValue = false;
+    const { result } = renderHook(() => useTaskStatus(initialValue));
+    expect(result.current.todoCompletionValue).toBe(initialValue);
+  });
+  it('The toggle() function updates the state variable', () => {
+    const { result } = renderHook(() => useTaskStatus(false));
+    expect(result.current.todoCompletionValue).toBe(false);
+    act(() => {
+      result.current.toggle();
+    });
+    expect(result.current.todoCompletionValue).toBe(true);
+    act(() => {
+      result.current.toggle();
+    });
+    expect(result.current.todoCompletionValue).toBe(false);
+  });
 })
