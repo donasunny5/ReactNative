@@ -6,7 +6,7 @@ const RowComponent = ({ task, onChangeStatus }) => {
   const { todoCompletionValue, toggle } = useTaskStatus(task.isComplete);
   onChangeStatus(todoCompletionValue)
   return (
-    <View style={styles.todoTask}>
+    <View style={styles.todoTask} testID={`task-item-${task.name}`}>
       <Text style={styles.taskNameText}>{`Name: ${task.name}`}</Text>
       <View style={styles.todoTaskToggle}>
         <View style={styles.statusContainer}>

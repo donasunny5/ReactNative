@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, waitFor} from '@testing-library/react-native';
+import { render, fireEvent, waitFor } from '@testing-library/react-native';
 import App from '../App';
 
 describe('Testing the App.js screen', () => {
@@ -10,14 +10,15 @@ describe('Testing the App.js screen', () => {
   });
 
   it('After adding a todo, the FlatList should update', async () => {
-    const { getByPlaceholderText, getByText, findByText } = render(<App />);
+    const { getByPlaceholderText, findByTestId, getByText } = render(<App />);
     const input = getByPlaceholderText('Enter task name');
     const addButton = getByText('Add Task');
 
     fireEvent.changeText(input, 'Task2');
     fireEvent.press(addButton);
 
-    const newTaskElement =  findByText('Task2');    
+    const newTaskElement = await findByTestId('task-item-Task2');
+    
     expect(newTaskElement).toBeTruthy();
   });
 });

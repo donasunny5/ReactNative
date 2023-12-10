@@ -18,7 +18,7 @@ export default function App() {
   };
   const handleClearAll = () => {
     const updatedList = clearAll();
-    setListData(updatedList);
+    setListData([...updatedList]);
   };
 
   <Button onPress={handleClearAll} title="Clear All" />
@@ -55,7 +55,11 @@ export default function App() {
             value={newTaskName}
             onChangeText={(text) => setNewTaskName(text)}
           />
-          <TouchableOpacity style={styles.addButton} onPress={handleAddTask}>
+          <TouchableOpacity
+            testID="add-task-button" // Add this line
+            style={styles.addButton}
+            onPress={handleAddTask}
+            >
             <Text style={styles.buttonText}>Add Task</Text>
           </TouchableOpacity>
 
